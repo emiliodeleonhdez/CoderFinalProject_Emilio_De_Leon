@@ -1,6 +1,8 @@
 ﻿using CoderFinalProject_Emilio_De_Leon.Models;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
+using System.Text.Json;
 
 namespace CoderFinalProject_Emilio_De_Leon.Controllers
 
@@ -10,7 +12,7 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
     [Route("users")]
     public class UserController : ControllerBase
     {
-
+        [EnableCors("UserPolicy")]
         [HttpGet]
         [Route("getallusers")]
         public dynamic GetUsers()
@@ -34,6 +36,7 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
                                     User user = new User();
                                     user.Id = int.Parse(reader["id"].ToString());
                                     user.Nombre = reader["Nombre"].ToString();
+                                    user.Apellido = reader["Apellido"].ToString();
                                     user.NombreUsuario = reader["NombreUsuario"].ToString();
                                     user.Contrasena = reader["Contraseña"].ToString();
                                     user.Mail = reader["Mail"].ToString();
@@ -41,7 +44,8 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
                                     UserList.Add(user);
                                 }
                                 connection.Close();
-                                return UserList;
+                                var UserListJson = JsonSerializer.Serialize(UserList);
+                                return UserListJson;
                             }
                             else
                             {
