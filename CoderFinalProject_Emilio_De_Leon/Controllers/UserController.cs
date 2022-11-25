@@ -12,7 +12,7 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
     [Route("users")]
     public class UserController : ControllerBase
     {
-        [EnableCors("UserPolicy")]
+        [EnableCors("AllowAnyOrigin")]
         [HttpGet]
         [Route("getallusers")]
         public dynamic GetUsers()
