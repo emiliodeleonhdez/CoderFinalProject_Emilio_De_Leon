@@ -8,12 +8,12 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
 {
 
     [ApiController]
-    [Route("products")]
+    [Route("[controller]")]
     public class ProductController : ControllerBase
     {
         [EnableCors("AllowAnyOrigin")]
         [HttpGet]
-        [Route("getallproducts")]
+        [Route("[action]")]
 
         public dynamic GetProducts()
         {

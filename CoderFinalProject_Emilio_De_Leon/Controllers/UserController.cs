@@ -10,12 +10,12 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
 
 {
     [ApiController]
-    [Route("users")]
+    [Route("[controller]")]
     public class UserController : ControllerBase
     {
         [EnableCors("AllowAnyOrigin")]
         [HttpGet]
-        [Route("getallusers")]
+        [Route("[action]")]
         public dynamic GetUsers()
         {
 
@@ -65,7 +65,7 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
 
         [EnableCors("AllowAnyOrigin")]
         [HttpPost]
-        [Route("createuser")]
+        [Route("[action]")]
         public dynamic CreateUser(User user)
         {
             String connectionString = "Server=sql.bsite.net\\MSSQL2016;Database=mammary0743_coderdb;User Id=mammary0743_coderdb;Password=2XuMoYCSjd5oVZ;\r\n";
@@ -83,6 +83,7 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
                         command.Parameters.Add(new SqlParameter("mail", SqlDbType.VarChar) { Value = user.Mail });
 
                         var InsertNewUser = command.ExecuteNonQuery();
+                        connection.Close();
                         return InsertNewUser;
                     }
 

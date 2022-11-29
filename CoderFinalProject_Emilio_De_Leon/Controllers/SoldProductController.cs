@@ -7,12 +7,12 @@ using System.Text.Json;
 namespace CoderFinalProject_Emilio_De_Leon.Controllers
 {
     [ApiController]
-    [Route("soldproducts")]
+    [Route("[controller]")]
     public class SoldProductController : ControllerBase
     {
         [EnableCors("AllowAnyOrigin")]
         [HttpGet]
-        [Route("getallsoldproducts")]
+        [Route("[action]")]
 
         public dynamic GetSoldProducts()
         {
