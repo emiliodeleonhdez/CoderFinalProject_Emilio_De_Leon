@@ -1,4 +1,5 @@
 ﻿using CoderFinalProject_Emilio_De_Leon.Models;
+using CoderFinalProject_Emilio_De_Leon.Repositories;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
@@ -11,52 +12,39 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
     [Route("[controller]")]
     public class ProductController : ControllerBase
     {
+        private ProductRepository repository = new ProductRepository();
+
         [EnableCors("AllowAnyOrigin")]
         [HttpGet]
         [Route("[action]")]
 
-        public dynamic GetProducts()
+        public ActionResult<List<Producto>> Get()
         {
-            String connectionString = "Server=sql.bsite.net\\MSSQL2016;Database=mammary0743_coderdb;User Id=mammary0743_coderdb;Password=2XuMoYCSjd5oVZ;\r\n";
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            try
             {
-                try
-                {
-                    using (SqlCommand command = new SqlCommand("SELECT * FROM Producto", connection))
-                    {
-                        connection.Open();
-                        List<Producto> ProductList = new List<Producto>();
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                            {
-                                while (reader.Read())
-                                {
-                                    Producto product = new Producto();
-                                    product.Id = int.Parse(reader["Id"].ToString());
-                                    product.Descripciones = reader["Descripciones"].ToString();
-                                    product.Costo = decimal.Parse(reader["Costo"].ToString());
-                                    product.PrecioVenta = decimal.Parse(reader["PrecioVenta"].ToString());
-                                    product.Stock = int.Parse(reader["Stock"].ToString());
-                                    product.IdUsuario = int.Parse(reader["IdUsuario"].ToString());
+                List<Producto>? ProductList = repository.ListProducts();
+                return Ok(ProductList);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
 
-                                    ProductList.Add(product);
-                                }
-                                connection.Close();
-                                var ProducListJson = JsonSerializer.Serialize(ProductList);
-                                return ProducListJson;
-                            }
-                            else
-                            {
-                                return "No data";
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return ex.Message;
-                }
+        [EnableCors("AllowAnyOrigin")]
+        [HttpPost]
+        [Route("[action]")]
+
+        public ActionResult Post([FromBody] Producto producto)
+        {
+            try
+            {
+                Producto createProducto = repository.CreateProduct(producto);
+                return StatusCode(StatusCodes.Status201Created, createProducto);
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
             }
         }
 
