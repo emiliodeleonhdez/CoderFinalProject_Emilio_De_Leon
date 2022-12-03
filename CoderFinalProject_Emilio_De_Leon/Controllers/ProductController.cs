@@ -48,5 +48,27 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
             }
         }
 
+        [EnableCors("AllowAnyOrigin")]
+        [HttpDelete]
+        [Route("[action]")]
+
+        public ActionResult Delete([FromBody] int id)
+        {
+            try
+            {
+                bool DeleteProduct = repository.DeleteProduct(id);
+                if (DeleteProduct)
+                {
+                    return Ok();
+                }
+                else { return NotFound(); }
+
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
     }
 }

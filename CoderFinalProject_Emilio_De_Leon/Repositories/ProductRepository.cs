@@ -1,4 +1,5 @@
 ﻿using CoderFinalProject_Emilio_De_Leon.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -110,5 +111,28 @@ namespace CoderFinalProject_Emilio_De_Leon.Repositories
             }
         }
 
+        public bool DeleteProduct(int id)
+        {
+            if(connection == null)
+            {
+                throw new Exception("Connection with DB not established...");
+            }
+            try
+            {
+                int rowsReturned = 0;
+                using (SqlCommand command = new SqlCommand("DELETE FROM Producto WHERE id = @id", connection))
+                {
+                    connection.Open();
+                    command.Parameters.Add(new SqlParameter("id", SqlDbType.BigInt) { Value = id });
+                    rowsReturned = command.ExecuteNonQuery();
+                }
+                connection.Close();
+                return rowsReturned > 0;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }
