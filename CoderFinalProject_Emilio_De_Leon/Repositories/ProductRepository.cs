@@ -134,5 +134,35 @@ namespace CoderFinalProject_Emilio_De_Leon.Repositories
                 throw;
             }
         }
+
+        public bool UpdateProduct(Producto producto)
+        {
+            if (connection == null)
+            {
+                throw new Exception("Connection with DB not established...");
+            }
+            try
+            {
+                int rowsUpdated = 0;
+                using (SqlCommand command = new SqlCommand("UPDATE Prodcuto SET Descripciones = @descripciones, Costo = @costo, PrecioVenta = @precioVenta, Stock = @stock, idUsuario = @idUsuario WHERE id = '@id'", connection))
+                {
+                    connection.Open();
+                    command.Parameters.Add(new SqlParameter("id", SqlDbType.BigInt) { Value = producto.Id });
+                    command.Parameters.Add(new SqlParameter("descripciones", SqlDbType.VarChar) { Value = producto.Descripciones });
+                    command.Parameters.Add(new SqlParameter("costo", SqlDbType.Float) { Value = producto.Costo });
+                    command.Parameters.Add(new SqlParameter("precioVenta", SqlDbType.Float) { Value = producto.PrecioVenta });
+                    command.Parameters.Add(new SqlParameter("stock", SqlDbType.Int) { Value = producto.Stock });
+                    command.Parameters.Add(new SqlParameter("idUsuario", SqlDbType.BigInt) { Value = producto.IdUsuario });
+                    rowsUpdated = command.ExecuteNonQuery();
+
+                }
+                connection.Close();
+                return rowsUpdated > 0;
+            }
+            catch
+            {
+                throw;
+            }
+        }
     }
 }

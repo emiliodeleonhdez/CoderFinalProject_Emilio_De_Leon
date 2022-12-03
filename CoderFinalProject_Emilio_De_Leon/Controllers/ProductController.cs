@@ -2,6 +2,7 @@
 using CoderFinalProject_Emilio_De_Leon.Repositories;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.TagHelpers;
 using System.Data.SqlClient;
 using System.Text.Json;
 
@@ -63,6 +64,27 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
                 }
                 else { return NotFound(); }
 
+            }
+            catch (Exception ex)
+            {
+                return Problem(ex.Message);
+            }
+        }
+
+        [EnableCors("AllowAnyOrigin")]
+        [HttpPut]
+        [Route("[action]")]
+
+        public ActionResult Put([FromBody] Producto producto)
+        {
+            try
+            {
+                bool UpdateProduct = repository.UpdateProduct(producto);
+                if (UpdateProduct)
+                {
+                    return Ok();
+                }
+                else return NotFound();
             }
             catch (Exception ex)
             {
