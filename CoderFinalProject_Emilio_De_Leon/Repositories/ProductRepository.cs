@@ -144,7 +144,7 @@ namespace CoderFinalProject_Emilio_De_Leon.Repositories
             try
             {
                 int rowsUpdated = 0;
-                using (SqlCommand command = new SqlCommand("UPDATE Prodcuto SET Descripciones = @descripciones, Costo = @costo, PrecioVenta = @precioVenta, Stock = @stock, idUsuario = @idUsuario WHERE id = '@id'", connection))
+                using (SqlCommand command = new SqlCommand("UPDATE Producto SET Descripciones = @descripciones, Costo = @costo, PrecioVenta = @precioVenta, Stock = @stock, idUsuario = @idUsuario WHERE id = @id", connection))
                 {
                     connection.Open();
                     command.Parameters.Add(new SqlParameter("id", SqlDbType.BigInt) { Value = producto.Id });
