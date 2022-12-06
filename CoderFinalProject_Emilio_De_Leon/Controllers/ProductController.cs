@@ -82,7 +82,7 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
                 bool UpdateProduct = repository.UpdateProduct(producto);
                 if (UpdateProduct)
                 {
-                    return Ok();
+                    return Ok("Product updated");
                 }
                 else return NotFound();
             }

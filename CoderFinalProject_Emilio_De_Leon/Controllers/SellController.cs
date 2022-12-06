@@ -10,50 +10,51 @@ namespace CoderFinalProject_Emilio_De_Leon.Controllers
     [Route("[controller]")]
     public class SellController : ControllerBase
     {
-        [EnableCors("AllowAnyOrigin")]
-        [HttpGet]
-        [Route("[action]")]
+        //[EnableCors("AllowAnyOrigin")]
+        //[HttpGet]
+        //[Route("[action]")]
 
-        public dynamic GetSells()
-        {
-            String connectionString = "Server=sql.bsite.net\\MSSQL2016;Database=mammary0743_coderdb;User Id=mammary0743_coderdb;Password=2XuMoYCSjd5oVZ;\r\n";
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                try
-                {
-                    using (SqlCommand command = new SqlCommand("SELECT * FROM Venta", connection))
-                    {
-                        connection.Open();
-                        List<Sell> SellList = new List<Sell>();
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            if (reader.HasRows)
-                            {
-                                while (reader.Read())
-                                {
-                                    Sell sell = new Sell();
-                                    sell.Id = int.Parse(reader["Id"].ToString());
-                                    sell.Comentarios = reader["Comentarios"].ToString();
-                                    sell.IdUsuario = int.Parse(reader["IdUsuario"].ToString());
+        //public dynamic GetSells()
+        //{
+        //    String connectionString = "Server=sql.bsite.net\\MSSQL2016;Database=mammary0743_coderdb;User Id=mammary0743_coderdb;Password=2XuMoYCSjd5oVZ;\r\n";
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        try
+        //        {
+        //            using (SqlCommand command = new SqlCommand("SELECT * FROM Venta", connection))
+        //            {
+        //                connection.Open();
+        //                List<Sell> SellList = new List<Sell>();
+        //                using (SqlDataReader reader = command.ExecuteReader())
+        //                {
+        //                    if (reader.HasRows)
+        //                    {
+        //                        while (reader.Read())
+        //                        {
+        //                            Sell sell = new Sell();
+        //                            sell.Id = int.Parse(reader["Id"].ToString());
+        //                            sell.Comentarios = reader["Comentarios"].ToString();
+        //                            sell.IdUsuario = int.Parse(reader["IdUsuario"].ToString());
    
-                                    SellList.Add(sell);
-                                }
-                                connection.Close();
-                                var SellListJson = JsonSerializer.Serialize(SellList);
-                                return SellListJson;
-                            }
-                            else
-                            {
-                                return "No data";
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return ex.Message;
-                }
-            }
-        }
+        //                            SellList.Add(sell);
+        //                        }
+        //                        connection.Close();
+        //                        var SellListJson = JsonSerializer.Serialize(SellList);
+        //                        return SellListJson;
+        //                    }
+        //                    else
+        //                    {
+        //                        return "No data";
+        //                    }
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return ex.Message;
+        //        }
+        //    }
+        //}
     }
+
 }
